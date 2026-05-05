@@ -1,0 +1,11 @@
+toggle_filter:
+  name: Toggle Filter
+  description: Toggle the visibility of a person's calendar events (shared across all users).
+  fields:
+    person:
+      name: Person
+      description: The person name to toggle (must match the configured name exactly).
+      required: true
+      example: "David"
+      selector:
+        text:

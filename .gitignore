@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Stale build output (build now writes into custom_components/aurora_calendar/)
+dist/
+
+# macOS
+.DS_Store
+
+# AI agent / local tooling
+AGENTS.md
+docs/
+icon-concepts.html
+.claude/
+.codex-revert/
+
+# Editor
+.vscode/
+.idea/

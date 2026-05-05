@@ -1,0 +1,30 @@
+{
+  "options": {
+    "step": {
+      "details": {
+        "sections": {
+          "calendar_1": "mdi:calendar-account",
+          "calendar_2": "mdi:calendar-account",
+          "calendar_3": "mdi:calendar-account",
+          "calendar_4": "mdi:calendar-account",
+          "calendar_5": "mdi:calendar-account",
+          "calendar_6": "mdi:calendar-account",
+          "calendar_7": "mdi:calendar-account",
+          "calendar_8": "mdi:calendar-account",
+          "calendar_9": "mdi:calendar-account",
+          "calendar_10": "mdi:calendar-account",
+          "calendar_11": "mdi:calendar-account",
+          "calendar_12": "mdi:calendar-account",
+          "calendar_13": "mdi:calendar-account",
+          "calendar_14": "mdi:calendar-account",
+          "calendar_15": "mdi:calendar-account",
+          "calendar_16": "mdi:calendar-account",
+          "calendar_17": "mdi:calendar-account",
+          "calendar_18": "mdi:calendar-account",
+          "calendar_19": "mdi:calendar-account",
+          "calendar_20": "mdi:calendar-account"
+        }
+      }
+    }
+  }
+}
