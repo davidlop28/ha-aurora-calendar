@@ -1,7 +1,7 @@
 {
   "domain": "aurora_calendar",
   "name": "Aurora Calendar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "config_flow": true,
   "documentation": "https://github.com/davidlop28/ha-aurora-calendar",
   "issue_tracker": "https://github.com/davidlop28/ha-aurora-calendar/issues",

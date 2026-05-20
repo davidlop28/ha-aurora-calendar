@@ -6,7 +6,6 @@ from pathlib import Path
 
 import voluptuous as vol
 
-from homeassistant.components.frontend import add_extra_js_url
 from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
@@ -63,9 +62,37 @@ async def _register_card_resources(hass: HomeAssistant) -> None:
     )
 
     cache_key = await hass.async_add_executor_job(_card_cache_key, integration_dir)
-    add_extra_js_url(hass, f"{_STATIC_URL_PATH}/{_CARD_FILENAME}?v={cache_key}")
-    _LOGGER.debug("Registered Aurora Calendar card at %s (v%s)", _STATIC_URL_PATH, cache_key)
+    url = f"{_STATIC_URL_PATH}/{_CARD_FILENAME}?v={cache_key}"
 
+    await _upsert_lovelace_resource(hass, url);
+    _LOGGER.debug("Registered Aurora Calendar card at %s", url)
+
+async def _upsert_lovelace_resource(hass: HomeAssistant, url: str) -> None:
+    """Add or update the card URL in the Lovelace resource registry."""
+    try:
+        lovelace_data = hass.data.get("lovelace")
+        if lovelace_data is None:
+            _LOGGER.warning("Aurora Calendar: Lovelace not loaded; skipping resource registration")
+            return
+        resources = getattr(lovelace_data, "resources", None)
+        if resources is None:
+            _LOGGER.warning("Aurora Calendar: Lovelace resources unavailable (YAML mode?); skipping")
+            return
+        await resources.async_load()
+        existing = next(
+            (r for r in resources.async_items() if _CARD_FILENAME in r["url"]),
+            None,
+        )
+        if existing is None:
+            await resources.async_create_item({"res_type": "module", "url": url})
+            _LOGGER.info("Aurora Calendar: registered Lovelace resource %s", url)
+        elif existing["url"] != url:
+            await resources.async_update_item(
+                existing["id"], {"res_type": "module", "url": url}
+            )
+            _LOGGER.info("Aurora Calendar: updated Lovelace resource to %s", url)
+    except Exception:
+        _LOGGER.exception("Aurora Calendar: failed to register Lovelace resource")
 
 def _card_cache_key(integration_dir: Path) -> str:
     """Cache-bust the card URL whenever the JS file changes (mtime-based)."""
