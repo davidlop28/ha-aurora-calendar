@@ -615,7 +615,7 @@ export class AuroraCalendarMonth extends LitElement {
     button.day-num {
       background: none;
       border: none;
-      font: inherit;
+      font-family: inherit;
       cursor: pointer;
       padding: 0;
     }
