@@ -39,6 +39,9 @@ export interface AuroraCalendarConfig {
   // Features
   show_weather: boolean;
   weather_icon_style: WeatherIconStyle;
+
+  // Interaction
+  tap_day_opens_day_view: boolean;
 }
 
 export const CONFIG_DEFAULTS: Omit<AuroraCalendarConfig, "type" | "integration"> = {
@@ -62,6 +65,7 @@ export const CONFIG_DEFAULTS: Omit<AuroraCalendarConfig, "type" | "integration">
   background_blur: 0,
   show_weather: true,
   weather_icon_style: "static",
+  tap_day_opens_day_view: true,
 };
 
 export interface CalendarInfo {
