@@ -66,6 +66,7 @@ export class AuroraCalendarMonth extends LitElement {
   @property({ attribute: false }) weatherEntity = "";
   @property({ attribute: false }) locale = "en";
   @property({ attribute: false }) persons: PersonInfo[] = [];
+  @property({ type: Boolean }) dayClickable = false;
   private _autoScrollKey = "";
 
   updated(): void {
@@ -117,9 +118,15 @@ export class AuroraCalendarMonth extends LitElement {
                   ${isPast ? "past" : ""}"
               >
                 <div class="day-meta">
-                  <div class="day-num ${isToday ? "circle" : ""}">
-                    ${day.getDate()}
-                  </div>
+                  ${this.dayClickable
+                    ? html`<button
+                        class="day-num clickable ${isToday ? "circle" : ""}"
+                        aria-label=${t(this.locale, "tapDayAria")}
+                        @click=${() => this._selectDay(day)}
+                      >${day.getDate()}</button>`
+                    : html`<div class="day-num ${isToday ? "circle" : ""}">
+                        ${day.getDate()}
+                      </div>`}
                   ${weather ? html`
                     <button
                       class="weather-pill"
@@ -372,6 +379,14 @@ export class AuroraCalendarMonth extends LitElement {
     }));
   }
 
+  private _selectDay(day: Date): void {
+    this.dispatchEvent(new CustomEvent("aurora-day-select", {
+      detail: { date: day },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
   private _personAvatar(event: CalendarEvent) {
     const person = this.persons.find((p) => p.person === event.person);
     const color = person?.color || event.color;
@@ -595,6 +610,22 @@ export class AuroraCalendarMonth extends LitElement {
       color: var(--text-primary-color, #fff);
       border-radius: 6px;
       font-weight: 700;
+    }
+
+    button.day-num {
+      background: none;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    button.day-num.clickable:hover:not(.circle) {
+      background: var(--secondary-background-color, rgba(0, 0, 0, 0.08));
+    }
+
+    button.day-num.clickable.circle:hover {
+      filter: brightness(1.1);
     }
 
     .chip {
