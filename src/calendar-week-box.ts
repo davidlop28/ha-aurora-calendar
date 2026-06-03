@@ -61,6 +61,7 @@ export class AuroraCalendarWeekBox extends LitElement {
   @property({ attribute: false }) weatherEntity = "";
   @property({ attribute: false }) locale = "en";
   @property({ attribute: false }) persons: PersonInfo[] = [];
+  @property({ type: Boolean }) dayClickable = false;
   private _autoScrollKey = "";
 
   updated(): void {
@@ -95,7 +96,13 @@ export class AuroraCalendarWeekBox extends LitElement {
             <div class="day-cell ${isToday ? "today" : ""} ${isPast ? "past" : ""}">
               <div class="day-heading">
                 <div class="date-wrap">
-                  <span class="date-num ${isToday ? "circle" : ""}">${day.getDate()}</span>
+                  ${this.dayClickable
+                    ? html`<button
+                        class="date-num clickable ${isToday ? "circle" : ""}"
+                        aria-label=${t(this.locale, "tapDayAria")}
+                        @click=${() => this._selectDay(day)}
+                      >${day.getDate()}</button>`
+                    : html`<span class="date-num ${isToday ? "circle" : ""}">${day.getDate()}</span>`}
                   <span class="day-label">
                     <span class="dow">${formatWeekday(this.locale, day, "long")}</span>
                     <span class="month-lbl">${formatMonth(this.locale, day, "short")}</span>
@@ -367,6 +374,14 @@ export class AuroraCalendarWeekBox extends LitElement {
     }));
   }
 
+  private _selectDay(day: Date): void {
+    this.dispatchEvent(new CustomEvent("aurora-day-select", {
+      detail: { date: day },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
   private _personAvatar(event: CalendarEvent) {
     const person = this.persons.find((p) => p.person === event.person);
     const color = person?.color || event.color;
@@ -479,6 +494,22 @@ export class AuroraCalendarWeekBox extends LitElement {
       background: var(--primary-color);
       color: var(--text-primary-color, #fff);
       font-weight: 700;
+    }
+
+    button.date-num {
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    button.date-num.clickable:hover:not(.circle) {
+      background: var(--secondary-background-color, rgba(0, 0, 0, 0.08));
+    }
+
+    button.date-num.clickable.circle:hover {
+      filter: brightness(1.1);
     }
 
     .month-lbl {
