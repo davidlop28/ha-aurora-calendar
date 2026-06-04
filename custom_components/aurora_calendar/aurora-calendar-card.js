@@ -93,6 +93,7 @@ const CONFIG_DEFAULTS = {
     background_blur: 0,
     show_weather: true,
     weather_icon_style: "static",
+    tap_day_opens_day_view: true,
 };
 
 /**
@@ -211,8 +212,11 @@ const TRANSLATIONS = {
         viewBiweek: "Biweek",
         viewMonth: "Month",
         viewNext7Days: "Next 7 Days",
-        viewToday: "Today",
+        viewToday: "Day",
         viewWeek: "Week",
+        tapDayOpensDayView: "Tap day to open day view",
+        tapDayOpensDayViewDesc: "Clicking a date number opens that day's detail view",
+        tapDayAria: "Open day view",
         calendar: "Calendar",
         addEvent: "Add event",
         allDayLabel: "All day",
@@ -308,8 +312,11 @@ const TRANSLATIONS = {
         viewBiweek: "Quincena",
         viewMonth: "Mes",
         viewNext7Days: "Proximos 7 dias",
-        viewToday: "Hoy",
+        viewToday: "Día",
         viewWeek: "Semana",
+        tapDayOpensDayView: "Tocar el día para abrir la vista diaria",
+        tapDayOpensDayViewDesc: "Al hacer clic en un número de fecha se abre la vista detallada de ese día",
+        tapDayAria: "Abrir vista diaria",
         cardOpacity: "Opacidad de la tarjeta",
         glassBackground: "Fondo tipo cristal",
         glassBackgroundDesc: "Agrega una superficie translucida para mostrar fondos o imagenes del panel.",
@@ -370,8 +377,11 @@ const TRANSLATIONS = {
         viewBiweek: "Zwei Wochen",
         viewMonth: "Monat",
         viewNext7Days: "Naechste 7 Tage",
-        viewToday: "Heute",
+        viewToday: "Tag",
         viewWeek: "Woche",
+        tapDayOpensDayView: "Tag antippen, um die Tagesansicht zu öffnen",
+        tapDayOpensDayViewDesc: "Ein Klick auf eine Datumszahl öffnet die Detailansicht des Tages",
+        tapDayAria: "Tagesansicht öffnen",
         visibleEndHour: "Sichtbare Endstunde",
         visibleEndHourHelper: "Exklusives Ende; 22:00 zeigt bis 21:59.",
         visibleStartHour: "Sichtbare Startstunde",
@@ -428,8 +438,11 @@ const TRANSLATIONS = {
         viewBiweek: "Deux semaines",
         viewMonth: "Mois",
         viewNext7Days: "7 prochains jours",
-        viewToday: "Aujourd'hui",
+        viewToday: "Jour",
         viewWeek: "Semaine",
+        tapDayOpensDayView: "Appuyer sur un jour pour ouvrir la vue journalière",
+        tapDayOpensDayViewDesc: "Cliquer sur un numéro de date ouvre la vue détaillée du jour",
+        tapDayAria: "Ouvrir la vue journalière",
         visibleEndHour: "Heure de fin visible",
         visibleEndHourHelper: "Fin exclusive; 22:00 affiche jusqu'a 21:59.",
         visibleStartHour: "Heure de debut visible",
@@ -486,8 +499,11 @@ const TRANSLATIONS = {
         viewBiweek: "Due settimane",
         viewMonth: "Mese",
         viewNext7Days: "Prossimi 7 giorni",
-        viewToday: "Oggi",
+        viewToday: "Giorno",
         viewWeek: "Settimana",
+        tapDayOpensDayView: "Tocca il giorno per aprire la vista giornaliera",
+        tapDayOpensDayViewDesc: "Facendo clic su un numero di data si apre la vista dettagliata del giorno",
+        tapDayAria: "Apri vista giornaliera",
         visibleEndHour: "Ora finale visibile",
         visibleEndHourHelper: "Fine esclusiva; 22:00 mostra fino alle 21:59.",
         visibleStartHour: "Ora iniziale visibile",
@@ -544,8 +560,11 @@ const TRANSLATIONS = {
         viewBiweek: "Twee weken",
         viewMonth: "Maand",
         viewNext7Days: "Volgende 7 dagen",
-        viewToday: "Vandaag",
+        viewToday: "Dag",
         viewWeek: "Week",
+        tapDayOpensDayView: "Tik op de dag om de dagweergave te openen",
+        tapDayOpensDayViewDesc: "Klikken op een datumnummer opent de dagweergave",
+        tapDayAria: "Dagweergave openen",
         visibleEndHour: "Zichtbare eindtijd",
         visibleEndHourHelper: "Exclusief einde; 22:00 toont tot 21:59.",
         visibleStartHour: "Zichtbare starttijd",
@@ -602,8 +621,11 @@ const TRANSLATIONS = {
         viewBiweek: "Quinzenal",
         viewMonth: "Mes",
         viewNext7Days: "Proximos 7 dias",
-        viewToday: "Hoje",
+        viewToday: "Dia",
         viewWeek: "Semana",
+        tapDayOpensDayView: "Tocar no dia para abrir a vista diária",
+        tapDayOpensDayViewDesc: "Clicar num número de data abre a vista detalhada desse dia",
+        tapDayAria: "Abrir vista diária",
         visibleEndHour: "Hora final visivel",
         visibleEndHourHelper: "Fim exclusivo; 22:00 mostra ate 21:59.",
         visibleStartHour: "Hora inicial visivel",
@@ -660,8 +682,11 @@ const TRANSLATIONS = {
         viewBiweek: "Quinzenal",
         viewMonth: "Mes",
         viewNext7Days: "Proximos 7 dias",
-        viewToday: "Hoje",
+        viewToday: "Dia",
         viewWeek: "Semana",
+        tapDayOpensDayView: "Toque no dia para abrir a visualização diária",
+        tapDayOpensDayViewDesc: "Clicar em um número de data abre a visualização detalhada do dia",
+        tapDayAria: "Abrir visualização diária",
         visibleEndHour: "Hora final visivel",
         visibleEndHourHelper: "Fim exclusivo; 22:00 mostra ate 21:59.",
         visibleStartHour: "Hora inicial visivel",
@@ -718,8 +743,11 @@ const TRANSLATIONS = {
         viewBiweek: "Dwa tygodnie",
         viewMonth: "Miesiac",
         viewNext7Days: "Nastepne 7 dni",
-        viewToday: "Dzisiaj",
+        viewToday: "Dzień",
         viewWeek: "Tydzien",
+        tapDayOpensDayView: "Dotknij dnia, aby otworzyć widok dnia",
+        tapDayOpensDayViewDesc: "Kliknięcie numeru daty otwiera szczegółowy widok tego dnia",
+        tapDayAria: "Otwórz widok dnia",
         visibleEndHour: "Widoczna godzina koncowa",
         visibleEndHourHelper: "Koniec wylaczny; 22:00 pokazuje do 21:59.",
         visibleStartHour: "Widoczna godzina poczatkowa",
@@ -776,8 +804,11 @@ const TRANSLATIONS = {
         viewBiweek: "Tva veckor",
         viewMonth: "Manad",
         viewNext7Days: "Nasta 7 dagarna",
-        viewToday: "Idag",
+        viewToday: "Dag",
         viewWeek: "Vecka",
+        tapDayOpensDayView: "Tryck på dagen för att öppna dagsvyn",
+        tapDayOpensDayViewDesc: "Klick på ett datumnummer öppnar dagens detaljvy",
+        tapDayAria: "Öppna dagsvy",
         visibleEndHour: "Synlig sluttimme",
         visibleEndHourHelper: "Exklusivt slut; 22:00 visar till 21:59.",
         visibleStartHour: "Synlig starttimme",
@@ -1188,6 +1219,7 @@ let AuroraCalendarMonth = class AuroraCalendarMonth extends i {
         this.weatherEntity = "";
         this.locale = "en";
         this.persons = [];
+        this.dayClickable = false;
         this._autoScrollKey = "";
     }
     updated() {
@@ -1235,9 +1267,15 @@ let AuroraCalendarMonth = class AuroraCalendarMonth extends i {
                   ${isPast ? "past" : ""}"
               >
                 <div class="day-meta">
-                  <div class="day-num ${isToday ? "circle" : ""}">
-                    ${day.getDate()}
-                  </div>
+                  ${this.dayClickable
+                ? b `<button
+                        class="day-num clickable ${isToday ? "circle" : ""}"
+                        aria-label=${t(this.locale, "tapDayAria")}
+                        @click=${() => this._selectDay(day)}
+                      >${day.getDate()}</button>`
+                : b `<div class="day-num ${isToday ? "circle" : ""}">
+                        ${day.getDate()}
+                      </div>`}
                   ${weather ? b `
                     <button
                       class="weather-pill"
@@ -1471,6 +1509,13 @@ let AuroraCalendarMonth = class AuroraCalendarMonth extends i {
             composed: true,
         }));
     }
+    _selectDay(day) {
+        this.dispatchEvent(new CustomEvent("aurora-day-select", {
+            detail: { date: day },
+            bubbles: true,
+            composed: true,
+        }));
+    }
     _personAvatar(event) {
         const person = this.persons.find((p) => p.person === event.person);
         const color = person?.color || event.color;
@@ -1695,6 +1740,22 @@ AuroraCalendarMonth.styles = i$3 `
       font-weight: 700;
     }
 
+    button.day-num {
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    button.day-num.clickable:hover:not(.circle) {
+      background: var(--secondary-background-color, rgba(0, 0, 0, 0.08));
+    }
+
+    button.day-num.clickable.circle:hover {
+      filter: brightness(1.1);
+    }
+
     .chip {
       display: block;
       position: relative;
@@ -1887,6 +1948,9 @@ __decorate([
 __decorate([
     n({ attribute: false })
 ], AuroraCalendarMonth.prototype, "persons", void 0);
+__decorate([
+    n({ type: Boolean })
+], AuroraCalendarMonth.prototype, "dayClickable", void 0);
 AuroraCalendarMonth = __decorate([
     t$1("aurora-calendar-month")
 ], AuroraCalendarMonth);
@@ -1938,6 +2002,7 @@ let AuroraCalendarWeekBox = class AuroraCalendarWeekBox extends i {
         this.weatherEntity = "";
         this.locale = "en";
         this.persons = [];
+        this.dayClickable = false;
         this._autoScrollKey = "";
     }
     updated() {
@@ -1969,7 +2034,13 @@ let AuroraCalendarWeekBox = class AuroraCalendarWeekBox extends i {
             <div class="day-cell ${isToday ? "today" : ""} ${isPast ? "past" : ""}">
               <div class="day-heading">
                 <div class="date-wrap">
-                  <span class="date-num ${isToday ? "circle" : ""}">${day.getDate()}</span>
+                  ${this.dayClickable
+                ? b `<button
+                        class="date-num clickable ${isToday ? "circle" : ""}"
+                        aria-label=${t(this.locale, "tapDayAria")}
+                        @click=${() => this._selectDay(day)}
+                      >${day.getDate()}</button>`
+                : b `<span class="date-num ${isToday ? "circle" : ""}">${day.getDate()}</span>`}
                   <span class="day-label">
                     <span class="dow">${formatWeekday(this.locale, day, "long")}</span>
                     <span class="month-lbl">${formatMonth(this.locale, day, "short")}</span>
@@ -2222,6 +2293,13 @@ let AuroraCalendarWeekBox = class AuroraCalendarWeekBox extends i {
             composed: true,
         }));
     }
+    _selectDay(day) {
+        this.dispatchEvent(new CustomEvent("aurora-day-select", {
+            detail: { date: day },
+            bubbles: true,
+            composed: true,
+        }));
+    }
     _personAvatar(event) {
         const person = this.persons.find((p) => p.person === event.person);
         const color = person?.color || event.color;
@@ -2333,6 +2411,22 @@ AuroraCalendarWeekBox.styles = i$3 `
       background: var(--primary-color);
       color: var(--text-primary-color, #fff);
       font-weight: 700;
+    }
+
+    button.date-num {
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    button.date-num.clickable:hover:not(.circle) {
+      background: var(--secondary-background-color, rgba(0, 0, 0, 0.08));
+    }
+
+    button.date-num.clickable.circle:hover {
+      filter: brightness(1.1);
     }
 
     .month-lbl {
@@ -2655,6 +2749,9 @@ __decorate([
 __decorate([
     n({ attribute: false })
 ], AuroraCalendarWeekBox.prototype, "persons", void 0);
+__decorate([
+    n({ type: Boolean })
+], AuroraCalendarWeekBox.prototype, "dayClickable", void 0);
 AuroraCalendarWeekBox = __decorate([
     t$1("aurora-calendar-week-box")
 ], AuroraCalendarWeekBox);
@@ -4207,6 +4304,14 @@ let AuroraCalendarCard = class AuroraCalendarCard extends i {
         this._viewMenuOpen = false;
         persistView(this._storageKey, mode);
     }
+    _handleDaySelect(event) {
+        this._viewMode = "Today";
+        this._offset = this._dayDiff(localToday(), event.detail.date);
+        this._viewMenuOpen = false;
+        this._filterMenuOpen = false;
+        this._jumpMenuOpen = false;
+        persistView(this._storageKey, "Today");
+    }
     _toggleFilter(person) {
         this.hass.callService("aurora_calendar", "toggle_filter", { person });
     }
@@ -5350,6 +5455,8 @@ let AuroraCalendarCard = class AuroraCalendarCard extends i {
                       .weatherEntity=${this._weatherEntity}
                       .locale=${locale}
                       .persons=${persons}
+                      .dayClickable=${this._config.tap_day_opens_day_view}
+                      @aurora-day-select=${this._handleDaySelect}
                       @aurora-event-open=${this._handleEventOpen}
                     ></aurora-calendar-month>
                   `
@@ -5368,6 +5475,8 @@ let AuroraCalendarCard = class AuroraCalendarCard extends i {
                       .weatherEntity=${this._weatherEntity}
                       .locale=${locale}
                       .persons=${persons}
+                      .dayClickable=${this._config.tap_day_opens_day_view}
+                      @aurora-day-select=${this._handleDaySelect}
                       @aurora-event-open=${this._handleEventOpen}
                     ></aurora-calendar-month>
                   `
@@ -5381,6 +5490,8 @@ let AuroraCalendarCard = class AuroraCalendarCard extends i {
                       .weatherEntity=${this._weatherEntity}
                       .locale=${locale}
                       .persons=${persons}
+                      .dayClickable=${this._config.tap_day_opens_day_view}
+                      @aurora-day-select=${this._handleDaySelect}
                       @week-empty-click=${this._handleWeekEmptyClick}
                       @aurora-event-open=${this._handleEventOpen}
                     ></aurora-calendar-week-box>
@@ -6901,6 +7012,15 @@ let AuroraCalendarCardEditor = class AuroraCalendarCardEditor extends i {
               <ha-switch
                 .checked=${this._config.keep_all_day_events_visible}
                 @change=${(e) => this._set("keep_all_day_events_visible", e.target.checked)}
+              ></ha-switch>
+            </ha-settings-row>
+
+            <ha-settings-row>
+              <span slot="heading">${t(locale, "tapDayOpensDayView")}</span>
+              <span slot="description">${t(locale, "tapDayOpensDayViewDesc")}</span>
+              <ha-switch
+                .checked=${this._config.tap_day_opens_day_view}
+                @change=${(e) => this._set("tap_day_opens_day_view", e.target.checked)}
               ></ha-switch>
             </ha-settings-row>
           </section>

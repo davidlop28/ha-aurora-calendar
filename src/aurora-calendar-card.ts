@@ -505,6 +505,15 @@ export class AuroraCalendarCard extends LitElement {
     persistView(this._storageKey, mode);
   }
 
+  private _handleDaySelect(event: CustomEvent<{ date: Date }>): void {
+    this._viewMode = "Today";
+    this._offset = this._dayDiff(localToday(), event.detail.date);
+    this._viewMenuOpen = false;
+    this._filterMenuOpen = false;
+    this._jumpMenuOpen = false;
+    persistView(this._storageKey, "Today");
+  }
+
   private _toggleFilter(person: string): void {
     this.hass.callService("aurora_calendar", "toggle_filter", { person });
   }
@@ -1691,6 +1700,8 @@ export class AuroraCalendarCard extends LitElement {
                       .weatherEntity=${this._weatherEntity}
                       .locale=${locale}
                       .persons=${persons}
+                      .dayClickable=${this._config.tap_day_opens_day_view}
+                      @aurora-day-select=${this._handleDaySelect}
                       @aurora-event-open=${this._handleEventOpen}
                     ></aurora-calendar-month>
                   `
@@ -1709,6 +1720,8 @@ export class AuroraCalendarCard extends LitElement {
                       .weatherEntity=${this._weatherEntity}
                       .locale=${locale}
                       .persons=${persons}
+                      .dayClickable=${this._config.tap_day_opens_day_view}
+                      @aurora-day-select=${this._handleDaySelect}
                       @aurora-event-open=${this._handleEventOpen}
                     ></aurora-calendar-month>
                   `
@@ -1722,6 +1735,8 @@ export class AuroraCalendarCard extends LitElement {
                       .weatherEntity=${this._weatherEntity}
                       .locale=${locale}
                       .persons=${persons}
+                      .dayClickable=${this._config.tap_day_opens_day_view}
+                      @aurora-day-select=${this._handleDaySelect}
                       @week-empty-click=${this._handleWeekEmptyClick}
                       @aurora-event-open=${this._handleEventOpen}
                     ></aurora-calendar-week-box>
@@ -3203,6 +3218,15 @@ export class AuroraCalendarCardEditor extends LitElement {
               <ha-switch
                 .checked=${this._config.keep_all_day_events_visible}
                 @change=${(e: Event) => this._set("keep_all_day_events_visible", (e.target as HTMLInputElement).checked)}
+              ></ha-switch>
+            </ha-settings-row>
+
+            <ha-settings-row>
+              <span slot="heading">${t(locale, "tapDayOpensDayView")}</span>
+              <span slot="description">${t(locale, "tapDayOpensDayViewDesc")}</span>
+              <ha-switch
+                .checked=${this._config.tap_day_opens_day_view}
+                @change=${(e: Event) => this._set("tap_day_opens_day_view", (e.target as HTMLInputElement).checked)}
               ></ha-switch>
             </ha-settings-row>
           </section>
