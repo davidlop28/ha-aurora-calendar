@@ -6,7 +6,8 @@
   "documentation": "https://github.com/davidlop28/ha-aurora-calendar",
   "issue_tracker": "https://github.com/davidlop28/ha-aurora-calendar/issues",
   "requirements": [],
-  "dependencies": [],
+  "dependencies": ["http"],
+  "after_dependencies": ["lovelace"],
   "codeowners": ["@davidlop28"],
   "iot_class": "local_polling"
 }
