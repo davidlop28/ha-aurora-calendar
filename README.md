@@ -4,25 +4,25 @@
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-davidlop28-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/davidlop28)
 
-A feature-rich family calendar for Home Assistant — bundled as a single integration that ships its own Lovelace card. Displays Month, Week, Biweek, Today, and Next 7 Days views with per-person color coding, weather integration, background customization, and a built-in visual editor.
+A feature-rich family calendar for Home Assistant — bundled as a single integration + Lovelace card. Displays Month, Week, Biweek, Today, and Next 7 Days views with per-person color coding, weather integration, background customization, and a built-in visual editor.
 
 ---
 
 ## Features
 
 - **Multiple views** — Month, Week, Biweek, Today, Next 7 Days
-- **Per-person calendar colors** — automatically derived from your calendar entities or manually overridden
+- **Per-person calendar colors** — automatically derived from your calendar entities
 - **Weather overlay** — daily forecast icons and temperatures in the Month view
 - **Background customization** — static image, HA media, or glass effect
-- **Visual editor** — configure everything from the Lovelace UI without editing YAML
-- **Time grid** — configurable visible hour range in week views
-- **Localization** — adapts to your HA locale (10 languages bundled)
+- **Visual editor** — configure the card from the Lovelace UI
+- **Time grid** — configurable visible hour range in week/today views
+- **Localization** — 10 languages bundled - could use help refining the translations.
 
 ---
 
 ## Requirements
 
-- Home Assistant **2026.3** or later (uses the Brands Proxy API for the integration icon)
+- Home Assistant **2026.3** or later
 - One or more calendar entities already configured in HA (Google Calendar, Local Calendar, CalDAV, etc.)
 
 ---
@@ -31,27 +31,41 @@ A feature-rich family calendar for Home Assistant — bundled as a single integr
 
 ### Via HACS (recommended)
 
+Aurora Calendar isn't in the default HACS index yet, so it needs to be added as a custom repository.
+
 [![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=davidlop28&repository=ha-aurora-calendar&category=integration)
 
-1. Click the badge above (or open **HACS** → **Integrations** → **Explore & Download Repositories** and search **Aurora Calendar**)
-2. Download the integration
-3. Restart Home Assistant
-4. Go to **Settings → Devices & Services → Add Integration**, search **Aurora Calendar**, and follow the setup flow
+Click the badge above. It opens your HACS, adds Aurora Calendar as a custom repository, and takes you straight to the download page. Click **Download** and continue from step 3.
 
-The card is bundled with the integration and registers itself automatically — no separate Lovelace resource setup is required.
+**Manual:**
 
-### Manual
+1. Open **HACS** → ⋮ menu (top-right) → **Custom repositories**
+2. Paste `https://github.com/davidlop28/ha-aurora-calendar`, select **Integration** as the category, and click **Add**
+3. Find **Aurora Calendar** in HACS and click **Download**
+4. Restart Home Assistant
+5. Go to **Settings → Devices & Services → Add Integration**, search **Aurora Calendar**, and follow the setup flow
 
-1. Download the latest release zip
-2. Copy `custom_components/aurora_calendar/` into your HA `config/custom_components/` folder
-3. Restart Home Assistant
-4. Add the integration via **Settings → Devices & Services**
+The card is bundled with the integration and registers itself automatically when Lovelace is in storage mode (the default). If your dashboards run in YAML mode, see the note below.
+
+### Lovelace in YAML mode
+
+If you've set `lovelace: mode: yaml` in your `configuration.yaml`. You'll need to add the resource manually.
+
+In your `ui-lovelace.yaml` (or the resources file referenced from it), add:
+
+```yaml
+resources:
+  - url: /aurora_calendar_static/aurora-calendar-card.js
+    type: module
+```
 
 ---
 
-## Configuration
+## Card Configuration
 
-Add the card to any dashboard. The easiest way is to use the built-in **visual editor** — click **Add Card**, search for **Aurora Calendar**, and configure it from there.
+Note: After updating the integration, refresh your browser to load the new custom card. If you've not installed it with HACS, you will perhaps have to clear your browser cache first.
+
+The easiest way is to use the built-in **visual editor** — click **Add Card**, search for **Aurora Calendar**, and configure it from there.
 
 ### Minimal YAML
 
@@ -146,7 +160,7 @@ The compiled output goes to `custom_components/aurora_calendar/aurora-calendar-c
 
 ### Tests
 
-Two suites, both fast:
+There are two suites:
 
 ```bash
 # Frontend (TypeScript helpers — Vitest)
@@ -170,7 +184,7 @@ Run before opening a PR.
 
 ## Support
 
-If Aurora Calendar makes your home a little brighter, you can support its development:
+If this integration makes your home a little brighter, you can support its development:
 
 <a href="https://buymeacoffee.com/davidlop28" target="_blank">
   <img src="https://raw.githubusercontent.com/davidlop28/ha-aurora-calendar/main/assets/bmc-qr.png" alt="Buy Me A Coffee" width="180">
