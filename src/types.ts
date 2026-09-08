@@ -29,6 +29,7 @@ export interface AuroraCalendarConfig {
   event_font_family: string;
   show_calendar_grid_lines: boolean;
   keep_all_day_events_visible: boolean;
+  wrap_event_titles: boolean;
   glass_background: boolean;
   card_opacity: number;
   background_media: AuroraBackgroundMedia | null;
@@ -57,6 +58,7 @@ export const CONFIG_DEFAULTS: Omit<AuroraCalendarConfig, "type" | "integration">
   event_font_family: "inherit",
   show_calendar_grid_lines: true,
   keep_all_day_events_visible: false,
+  wrap_event_titles: false,
   glass_background: false,
   card_opacity: 100,
   background_media: null,

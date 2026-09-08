@@ -92,6 +92,7 @@ dim_past_events: true
 show_event_time: true
 time_format: 12h                    # 12h | 24h
 keep_all_day_events_visible: false
+wrap_event_titles: false          # Wrap long titles instead of truncating (Week, Biweek, Today, Next 7 Days)
 show_calendar_grid_lines: true
 event_font_size: 14                 # px
 event_font_family: inherit          # Any CSS font family
@@ -127,6 +128,7 @@ weather_icon_style: static          # static | animated
 | `show_event_time` | boolean | `true` | Show start time on event chips |
 | `time_format` | `12h` \| `24h` | `12h` | Clock format for event times |
 | `keep_all_day_events_visible` | boolean | `false` | Always show all-day events even when scrolled |
+| `wrap_event_titles` | boolean | `false` | Wrap event titles onto multiple lines instead of truncating with an ellipsis (Week, Biweek, Today, Next 7 Days). In duration-based time-grid views, very short events may still look tight since block height follows event duration, not title length. |
 | `show_calendar_grid_lines` | boolean | `true` | Show hour lines in week/day views |
 | `event_font_size` | number | `14` | Event chip font size in px |
 | `event_font_family` | string | `inherit` | Event chip font family |

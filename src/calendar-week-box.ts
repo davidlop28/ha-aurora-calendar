@@ -82,7 +82,7 @@ export class AuroraCalendarWeekBox extends LitElement {
     const nextWeekLabel = this._nextWeekLabel(days);
 
     return html`
-      <div class="week-box-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"}">
+      <div class="week-box-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"} ${this.config.wrap_event_titles ? "wrap-titles" : ""}">
         ${days.map((day) => {
           const isToday = sameDay(day, today);
           const isPast = day < today && !isToday;
@@ -678,6 +678,13 @@ export class AuroraCalendarWeekBox extends LitElement {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .wrap-titles .chip-title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
     }
 
     .chip-title {

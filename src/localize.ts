@@ -101,6 +101,8 @@ type TranslationKey =
   | "weekStartsOn"
   | "tapDayOpensDayView"
   | "tapDayOpensDayViewDesc"
+  | "wrapEventTitles"
+  | "wrapEventTitlesDesc"
   | "tapDayAria"
   | "visualBehavior";
 
@@ -182,6 +184,8 @@ const TRANSLATIONS: Record<string, TranslationMap> = {
     viewWeek: "Week",
     tapDayOpensDayView: "Tap day to open day view",
     tapDayOpensDayViewDesc: "Clicking a date number opens that day's detail view",
+    wrapEventTitles: "Wrap event titles",
+    wrapEventTitlesDesc: "Wrap long event titles onto multiple lines instead of truncating them with an ellipsis, in Week and time-grid views. Short-duration time-grid events may still get visually tight since their block height is based on duration, not title length.",
     tapDayAria: "Open day view",
     calendar: "Calendar",
     addEvent: "Add event",

@@ -91,7 +91,7 @@ export class AuroraCalendarMonth extends LitElement {
     });
 
     return html`
-      <div class="month-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"}">
+      <div class="month-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"} ${this.config.wrap_event_titles ? "wrap-titles" : ""}">
         <div class="col-headers">
           ${dayHeaders.map((d) => html`<div class="col-header">${d}</div>`)}
         </div>
@@ -685,6 +685,13 @@ export class AuroraCalendarMonth extends LitElement {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .wrap-titles .chip-title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
     }
 
     .chip-title {
