@@ -182,7 +182,7 @@ export class AuroraCalendarTimeGrid extends LitElement {
     const pendingMove = this._pendingMove;
 
     return html`
-      <div class="tg-wrapper" style="--tg-day-count: ${dayCount}">
+      <div class="tg-wrapper ${this.config.wrap_event_titles ? 'wrap-titles' : ''}" style="--tg-day-count: ${dayCount}">
 
         <!-- ── Day header ── -->
         <div class="tg-header">
@@ -873,6 +873,15 @@ export class AuroraCalendarTimeGrid extends LitElement {
       font-family: var(--aurora-event-font-family);
     }
 
+    .wrap-titles .allday-chip {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
+      height: auto;
+      min-height: 28px;
+    }
+
     .allday-chip span:first-child {
       display: block;
       padding-right: 22px;
@@ -986,6 +995,10 @@ export class AuroraCalendarTimeGrid extends LitElement {
       color: var(--aurora-chip-fg);
       font-size: var(--aurora-event-font-size);
       font-family: var(--aurora-event-font-family);
+    }
+
+    .wrap-titles .ev-block {
+      overflow: visible;
     }
 
     .ev-block:hover {
@@ -1147,6 +1160,13 @@ export class AuroraCalendarTimeGrid extends LitElement {
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1.15;
+    }
+
+    .wrap-titles .ev-title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
     }
 
     .ev-time {

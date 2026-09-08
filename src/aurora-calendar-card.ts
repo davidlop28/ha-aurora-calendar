@@ -3243,6 +3243,15 @@ export class AuroraCalendarCardEditor extends LitElement {
               ></ha-switch>
             </ha-settings-row>
 
+            <ha-settings-row>
+              <span slot="heading">${t(locale, "wrapEventTitles")}</span>
+              <span slot="description">${t(locale, "wrapEventTitlesDesc")}</span>
+              <ha-switch
+                .checked=${this._config.wrap_event_titles}
+                @change=${(e: Event) => this._set("wrap_event_titles", (e.target as HTMLInputElement).checked)}
+              ></ha-switch>
+            </ha-settings-row>
+
             <label class="selector-control">
               <span>${t(locale, "timeFormat")}</span>
               <ha-selector
