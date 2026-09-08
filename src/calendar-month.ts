@@ -656,6 +656,12 @@ export class AuroraCalendarMonth extends LitElement {
       line-height: 1.05;
     }
 
+    .wrap-titles .chip.all-day-chip {
+      height: auto;
+      min-height: 28px;
+      overflow: visible;
+    }
+
     .all-day-stack .chip.all-day-chip:last-child {
       margin-bottom: 0;
     }

@@ -1787,6 +1787,12 @@ AuroraCalendarMonth.styles = i$3 `
       line-height: 1.05;
     }
 
+    .wrap-titles .chip.all-day-chip {
+      height: auto;
+      min-height: 28px;
+      overflow: visible;
+    }
+
     .all-day-stack .chip.all-day-chip:last-child {
       margin-bottom: 0;
     }
@@ -2574,6 +2580,12 @@ AuroraCalendarWeekBox.styles = i$3 `
       margin-bottom: 2px;
       font-size: var(--aurora-allday-font-size, 13px);
       line-height: 1.05;
+    }
+
+    .wrap-titles .chip.all-day-chip {
+      height: auto;
+      min-height: 28px;
+      overflow: visible;
     }
 
     .all-day-stack .chip.all-day-chip:last-child {
