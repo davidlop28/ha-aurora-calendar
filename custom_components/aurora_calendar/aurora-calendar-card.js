@@ -330,7 +330,7 @@ const TRANSLATIONS = {
         visualBehavior: "Comportamiento visual",
     },
     de: {
-        allDay: "ganztagig",
+        allDay: "ganztägig",
         animated: "Animiert",
         appearance: "Darstellung",
         calendarFilters: "Kalenderfilter",
@@ -359,9 +359,9 @@ const TRANSLATIONS = {
         medium: "Mittel",
         monday: "Montag",
         next: "Weiter",
-        nextWeek: "Naechste Woche",
-        openWeatherForecast: "Wettervorhersage oeffnen",
-        previous: "Zurueck",
+        nextWeek: "Nächste Woche",
+        openWeatherForecast: "Wettervorhersage öffnen",
+        previous: "Zurück",
         serif: "Serif",
         showCalendars: "Kalender anzeigen",
         showEventTimes: "Ereigniszeiten anzeigen",
@@ -373,10 +373,10 @@ const TRANSLATIONS = {
         today: "Heute",
         twelveHour: "12 Stunden",
         twentyFourHour: "24 Stunden",
-        unconfigured: "Oeffne Einstellungen -> Integrationen -> Aurora Calendar -> Konfigurieren, um deine Kalender hinzuzufuegen.",
+        unconfigured: "Öffne Einstellungen -> Integrationen -> Aurora Calendar -> Konfigurieren, um deine Kalender hinzuzufügen.",
         viewBiweek: "Zwei Wochen",
         viewMonth: "Monat",
-        viewNext7Days: "Naechste 7 Tage",
+        viewNext7Days: "Nächste 7 Tage",
         viewToday: "Tag",
         viewWeek: "Woche",
         tapDayOpensDayView: "Tag antippen, um die Tagesansicht zu öffnen",
@@ -386,7 +386,7 @@ const TRANSLATIONS = {
         visibleEndHourHelper: "Exklusives Ende; 22:00 zeigt bis 21:59.",
         visibleStartHour: "Sichtbare Startstunde",
         weatherForecast: "Wettervorhersage",
-        weatherForecastDesc: "Taegliches Wettersymbol und Temperatur in jeder Tageszelle anzeigen.",
+        weatherForecastDesc: "Tägliches Wettersymbol und Temperatur in jeder Tageszelle anzeigen.",
         weatherIconStyle: "Wettericon-Stil",
         weekStartsOn: "Woche beginnt am",
     },
@@ -6503,13 +6503,16 @@ AuroraCalendarCard.styles = i$3 `
     }
 
     .create-dialog-header ha-icon {
+      flex: 0 0 auto;
       width: 30px;
       height: 30px;
       color: var(--event-color, var(--primary-color));
     }
 
     .create-dialog-header h2 {
+      min-width: 0;
       margin: 0;
+      overflow-wrap: anywhere;
       font-size: 1.35rem;
       font-weight: 850;
       line-height: 1.1;

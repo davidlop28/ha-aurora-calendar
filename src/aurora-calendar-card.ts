@@ -2751,13 +2751,16 @@ export class AuroraCalendarCard extends LitElement {
     }
 
     .create-dialog-header ha-icon {
+      flex: 0 0 auto;
       width: 30px;
       height: 30px;
       color: var(--event-color, var(--primary-color));
     }
 
     .create-dialog-header h2 {
+      min-width: 0;
       margin: 0;
+      overflow-wrap: anywhere;
       font-size: 1.35rem;
       font-weight: 850;
       line-height: 1.1;
