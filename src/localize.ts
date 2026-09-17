@@ -185,7 +185,7 @@ const TRANSLATIONS: Record<string, TranslationMap> = {
     tapDayOpensDayView: "Tap day to open day view",
     tapDayOpensDayViewDesc: "Clicking a date number opens that day's detail view",
     wrapEventTitles: "Wrap event titles",
-    wrapEventTitlesDesc: "Wrap long event titles onto multiple lines instead of truncating them with an ellipsis, in Week and time-grid views. Short-duration time-grid events may still get visually tight since their block height is based on duration, not title length.",
+    wrapEventTitlesDesc: "Wrap long event titles onto multiple lines instead of truncating them to one line.",
     tapDayAria: "Open day view",
     calendar: "Calendar",
     addEvent: "Add event",

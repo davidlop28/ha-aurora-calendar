@@ -218,7 +218,7 @@ const TRANSLATIONS = {
         tapDayOpensDayView: "Tap day to open day view",
         tapDayOpensDayViewDesc: "Clicking a date number opens that day's detail view",
         wrapEventTitles: "Wrap event titles",
-        wrapEventTitlesDesc: "Wrap long event titles onto multiple lines instead of truncating them with an ellipsis, in Week and time-grid views. Short-duration time-grid events may still get visually tight since their block height is based on duration, not title length.",
+        wrapEventTitlesDesc: "Wrap long event titles onto multiple lines instead of truncating them to one line.",
         tapDayAria: "Open day view",
         calendar: "Calendar",
         addEvent: "Add event",
@@ -3077,12 +3077,14 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
                     ? `${fmtTime(s, this.config.time_format)} – ${fmtTime(en, this.config.time_format)}`
                     : "";
                 const isDragging = drag?.event.id === p.event.id;
+                const showTimeRow = p.height > 38 && !!timeStr;
+                const titleLines = this._titleLines(p.height, showTimeRow);
                 return b `
                         <div
                           class="ev-block aurora-event-chip ${dim ? "dim" : ""} ${p.event.canDragEdit ? "can-drag" : ""} ${isDragging ? "drag-source" : ""}"
                           @pointerdown=${(event) => this._handleEventPointerDown(event, p.event, startHour, endHour)}
                           @click=${() => this._handleEventClick(p.event)}
-                          style="top:${p.top}px;height:${p.height}px;left:calc(${p.col} / ${p.numCols} * (100% - 4px) + 2px);width:calc(1 / ${p.numCols} * (100% - 4px) - 2px);--aurora-chip-bg:${p.event.color};--aurora-chip-border-color:${shadeColor(p.event.color, -32)};--aurora-chip-fg:${textColor};"
+                          style="top:${p.top}px;height:${p.height}px;left:calc(${p.col} / ${p.numCols} * (100% - 4px) + 2px);width:calc(1 / ${p.numCols} * (100% - 4px) - 2px);--aurora-chip-bg:${p.event.color};--aurora-chip-border-color:${shadeColor(p.event.color, -32)};--aurora-chip-fg:${textColor};--ev-title-lines:${titleLines};"
                           title="${p.event.title}${timeStr ? "\n" + timeStr : ""}"
                         >
                           ${p.event.canDragEdit ? b `
@@ -3091,7 +3093,7 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
                             </button>
                           ` : A}
                           <div class="ev-title">${p.event.title}</div>
-                          ${p.height > 38 && timeStr
+                          ${showTimeRow
                     ? b `<div class="ev-time">${timeStr}</div>`
                     : A}
                           ${avatar}
@@ -3133,6 +3135,15 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
         const dayEnd = new Date(day);
         dayEnd.setHours(23, 59, 59, 999);
         return s <= dayEnd && en > dayStart;
+    }
+    // Block height follows event duration, so wrapped titles are clamped to the
+    // whole lines that fit rather than letting the block grow or the text spill.
+    _titleLines(blockHeight, showTimeRow) {
+        const fontSize = this.config.event_font_size;
+        const titleLineH = fontSize * 1.15;
+        const timeRowH = showTimeRow ? fontSize * 0.82 * 1.2 + 2 : 0;
+        const paddingY = 12;
+        return Math.max(1, Math.floor((blockHeight - paddingY - timeRowH) / titleLineH));
     }
     _personAvatar(event) {
         const person = this.persons.find((p) => p.person === event.person);
@@ -3577,6 +3588,12 @@ AuroraCalendarTimeGrid.styles = i$3 `
       text-overflow: ellipsis;
     }
 
+    .wrap-titles .allday-chip span:first-child {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
     .allday-chip.dim {
       opacity: 0.35;
     }
@@ -3683,10 +3700,6 @@ AuroraCalendarTimeGrid.styles = i$3 `
       color: var(--aurora-chip-fg);
       font-size: var(--aurora-event-font-size);
       font-family: var(--aurora-event-font-family);
-    }
-
-    .wrap-titles .ev-block {
-      overflow: visible;
     }
 
     .ev-block:hover {
@@ -3851,9 +3864,10 @@ AuroraCalendarTimeGrid.styles = i$3 `
     }
 
     .wrap-titles .ev-title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--ev-title-lines, 1);
       white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
       overflow-wrap: break-word;
     }
 
