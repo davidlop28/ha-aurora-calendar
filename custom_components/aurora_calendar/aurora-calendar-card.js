@@ -85,6 +85,7 @@ const CONFIG_DEFAULTS = {
     event_font_family: "inherit",
     show_calendar_grid_lines: true,
     keep_all_day_events_visible: false,
+    wrap_event_titles: false,
     glass_background: false,
     card_opacity: 100,
     background_media: null,
@@ -216,6 +217,8 @@ const TRANSLATIONS = {
         viewWeek: "Week",
         tapDayOpensDayView: "Tap day to open day view",
         tapDayOpensDayViewDesc: "Clicking a date number opens that day's detail view",
+        wrapEventTitles: "Wrap event titles",
+        wrapEventTitlesDesc: "Wrap long event titles onto multiple lines instead of truncating them to one line.",
         tapDayAria: "Open day view",
         calendar: "Calendar",
         addEvent: "Add event",
@@ -1242,7 +1245,7 @@ let AuroraCalendarMonth = class AuroraCalendarMonth extends i {
             return formatWeekday(this.locale, date, "short");
         });
         return b `
-      <div class="month-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"}">
+      <div class="month-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"} ${this.config.wrap_event_titles ? "wrap-titles" : ""}">
         <div class="col-headers">
           ${dayHeaders.map((d) => b `<div class="col-header">${d}</div>`)}
         </div>
@@ -1784,6 +1787,12 @@ AuroraCalendarMonth.styles = i$3 `
       line-height: 1.05;
     }
 
+    .wrap-titles .chip.all-day-chip {
+      height: auto;
+      min-height: 28px;
+      overflow: visible;
+    }
+
     .all-day-stack .chip.all-day-chip:last-child {
       margin-bottom: 0;
     }
@@ -1813,6 +1822,13 @@ AuroraCalendarMonth.styles = i$3 `
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .wrap-titles .chip-title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
     }
 
     .chip-title {
@@ -2021,7 +2037,7 @@ let AuroraCalendarWeekBox = class AuroraCalendarWeekBox extends i {
         const days = this.days.slice(0, 7);
         const nextWeekLabel = this._nextWeekLabel(days);
         return b `
-      <div class="week-box-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"}">
+      <div class="week-box-grid ${this.config.show_calendar_grid_lines ? "" : "no-grid"} ${this.config.wrap_event_titles ? "wrap-titles" : ""}">
         ${days.map((day) => {
             const isToday = sameDay$1(day, today);
             const isPast = day < today && !isToday;
@@ -2566,6 +2582,12 @@ AuroraCalendarWeekBox.styles = i$3 `
       line-height: 1.05;
     }
 
+    .wrap-titles .chip.all-day-chip {
+      height: auto;
+      min-height: 28px;
+      overflow: visible;
+    }
+
     .all-day-stack .chip.all-day-chip:last-child {
       margin-bottom: 0;
     }
@@ -2595,6 +2617,13 @@ AuroraCalendarWeekBox.styles = i$3 `
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .wrap-titles .chip-title {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
     }
 
     .chip-title {
@@ -2942,7 +2971,7 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
         const drag = this._drag;
         const pendingMove = this._pendingMove;
         return b `
-      <div class="tg-wrapper" style="--tg-day-count: ${dayCount}">
+      <div class="tg-wrapper ${this.config.wrap_event_titles ? 'wrap-titles' : ''}" style="--tg-day-count: ${dayCount}">
 
         <!-- ── Day header ── -->
         <div class="tg-header">
@@ -3048,12 +3077,14 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
                     ? `${fmtTime(s, this.config.time_format)} – ${fmtTime(en, this.config.time_format)}`
                     : "";
                 const isDragging = drag?.event.id === p.event.id;
+                const showTimeRow = p.height > 38 && !!timeStr;
+                const titleLines = this._titleLines(p.height, showTimeRow);
                 return b `
                         <div
                           class="ev-block aurora-event-chip ${dim ? "dim" : ""} ${p.event.canDragEdit ? "can-drag" : ""} ${isDragging ? "drag-source" : ""}"
                           @pointerdown=${(event) => this._handleEventPointerDown(event, p.event, startHour, endHour)}
                           @click=${() => this._handleEventClick(p.event)}
-                          style="top:${p.top}px;height:${p.height}px;left:calc(${p.col} / ${p.numCols} * (100% - 4px) + 2px);width:calc(1 / ${p.numCols} * (100% - 4px) - 2px);--aurora-chip-bg:${p.event.color};--aurora-chip-border-color:${shadeColor(p.event.color, -32)};--aurora-chip-fg:${textColor};"
+                          style="top:${p.top}px;height:${p.height}px;left:calc(${p.col} / ${p.numCols} * (100% - 4px) + 2px);width:calc(1 / ${p.numCols} * (100% - 4px) - 2px);--aurora-chip-bg:${p.event.color};--aurora-chip-border-color:${shadeColor(p.event.color, -32)};--aurora-chip-fg:${textColor};--ev-title-lines:${titleLines};"
                           title="${p.event.title}${timeStr ? "\n" + timeStr : ""}"
                         >
                           ${p.event.canDragEdit ? b `
@@ -3062,7 +3093,7 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
                             </button>
                           ` : A}
                           <div class="ev-title">${p.event.title}</div>
-                          ${p.height > 38 && timeStr
+                          ${showTimeRow
                     ? b `<div class="ev-time">${timeStr}</div>`
                     : A}
                           ${avatar}
@@ -3104,6 +3135,15 @@ let AuroraCalendarTimeGrid = class AuroraCalendarTimeGrid extends i {
         const dayEnd = new Date(day);
         dayEnd.setHours(23, 59, 59, 999);
         return s <= dayEnd && en > dayStart;
+    }
+    // Block height follows event duration, so wrapped titles are clamped to the
+    // whole lines that fit rather than letting the block grow or the text spill.
+    _titleLines(blockHeight, showTimeRow) {
+        const fontSize = this.config.event_font_size;
+        const titleLineH = fontSize * 1.15;
+        const timeRowH = showTimeRow ? fontSize * 0.82 * 1.2 + 2 : 0;
+        const paddingY = 12;
+        return Math.max(1, Math.floor((blockHeight - paddingY - timeRowH) / titleLineH));
     }
     _personAvatar(event) {
         const person = this.persons.find((p) => p.person === event.person);
@@ -3532,11 +3572,26 @@ AuroraCalendarTimeGrid.styles = i$3 `
       font-family: var(--aurora-event-font-family);
     }
 
+    .wrap-titles .allday-chip {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: break-word;
+      height: auto;
+      min-height: 28px;
+    }
+
     .allday-chip span:first-child {
       display: block;
       padding-right: 22px;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .wrap-titles .allday-chip span:first-child {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
 
     .allday-chip.dim {
@@ -3806,6 +3861,14 @@ AuroraCalendarTimeGrid.styles = i$3 `
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1.15;
+    }
+
+    .wrap-titles .ev-title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--ev-title-lines, 1);
+      white-space: normal;
+      overflow-wrap: break-word;
     }
 
     .ev-time {
@@ -7037,6 +7100,15 @@ let AuroraCalendarCardEditor = class AuroraCalendarCardEditor extends i {
               <ha-switch
                 .checked=${this._config.show_event_time}
                 @change=${(e) => this._set("show_event_time", e.target.checked)}
+              ></ha-switch>
+            </ha-settings-row>
+
+            <ha-settings-row>
+              <span slot="heading">${t(locale, "wrapEventTitles")}</span>
+              <span slot="description">${t(locale, "wrapEventTitlesDesc")}</span>
+              <ha-switch
+                .checked=${this._config.wrap_event_titles}
+                @change=${(e) => this._set("wrap_event_titles", e.target.checked)}
               ></ha-switch>
             </ha-settings-row>
 
