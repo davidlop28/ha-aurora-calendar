@@ -75,7 +75,9 @@ async def _upsert_lovelace_resource(hass: HomeAssistant, url: str) -> None:
             _LOGGER.warning("Aurora Calendar: Lovelace not loaded; skipping resource registration")
             return
         resources = getattr(lovelace_data, "resources", None)
-        if resources is None:
+        # In YAML resource mode, HA provides a read-only ResourceYAMLCollection
+        # with no async_load, so treat it the same as no collection.
+        if resources is None or not hasattr(resources, "async_load"):
             _LOGGER.warning("Aurora Calendar: Lovelace resources unavailable (YAML mode?); skipping")
             return
         await resources.async_load()

@@ -193,3 +193,18 @@ async def test_upsert_handles_yaml_mode_gracefully(hass: HomeAssistant) -> None:
     hass.data["lovelace"] = SimpleNamespace(resources=None)
 
     await _upsert_lovelace_resource(hass, "/whatever")
+
+
+async def test_upsert_handles_yaml_resource_collection(
+    hass: HomeAssistant, caplog: pytest.LogCaptureFixture
+) -> None:
+    """`resource_mode: yaml` gives a read-only ResourceYAMLCollection, not None."""
+    from homeassistant.components.lovelace.resources import ResourceYAMLCollection
+
+    hass.data["lovelace"] = SimpleNamespace(resources=ResourceYAMLCollection([]))
+
+    await _upsert_lovelace_resource(hass, "/whatever")
+
+    # The function swallows exceptions, so check the log rather than for a raise.
+    assert "failed to register Lovelace resource" not in caplog.text
+    assert "Lovelace resources unavailable" in caplog.text
